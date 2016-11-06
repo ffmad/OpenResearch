@@ -1,0 +1,86 @@
+{% extends "raw.html" %}
+
+{% block content %}
+<div class="row new-account">
+
+	<h3> Register a new address to start using <img class="login-logo" src="/img/logo.png"> </h3>
+
+	<div class="form-group">
+        <div class="col-sm-12">
+            <button id="register" type="submit" class="btn btn-default">Generate a new account</button>
+        </div>
+    </div>
+
+    <div class="newAccountRegistered col-sm-12">
+
+    	<span class="col-sm-12">
+            <a id="copy-address" class="copy-button" data-clipboard-text="{{ myAddress }}" title="Click to copy Address."><i class="fa fa-files-o"></i></a>
+    		<span class="col-sm-3">Your new address:</span>
+            <span class="col-sm-8 newAddress"></span>
+    	</span>
+    	<span class="col-sm-12">
+            <a id="key-address" class="copy-button" data-clipboard-text="{{ myAddress }}" title="Click to copy Address."><i class="fa fa-files-o"></i></a>
+    		<span class="col-sm-3">Your new key:</span>
+            <span class="col-sm-8 newKey"></span>
+    	</span>
+
+    	<span class="col-sm-12 red"><i class="fa fa-bolt"></i> Please store your address and key before accessing the app</span>
+
+		<div class="form-group center">
+	        <div class="col-sm-12">
+	            <button id="accessAccount" type="submit" class="btn btn-default">Access your new account</button>
+	        </div>
+	    </div>
+    </div>
+
+    <div class="log-phrase dark">
+		Go back to <a href="/">Login page</a>
+	</div>
+
+<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+{% endblock %}
+
+{% block js %}
+<script src="bower_components/bitcore/bitcore.min.js"></script>
+<script type="text/javascript">
+    var addressClient = new ZeroClipboard( document.getElementById("copy-address") );
+
+    addressClient.on( "ready", function( readyEvent ) {
+        addressClient.on( "aftercopy", function( event ) {
+        alert("Address copied to clipboard: " + event.data["text/plain"] );
+        } );
+    } );
+
+    var keyClient = new ZeroClipboard( document.getElementById("key-address") );
+
+    keyClient.on( "ready", function( readyEvent ) {
+        keyClient.on( "aftercopy", function( event ) {
+        alert("Address copied to clipboard: " + event.data["text/plain"] );
+        } );
+    } );
+
+	var bitcore = require('bitcore');
+
+	$("#register").click(function () {
+		$(".newAccountRegistered").show();
+
+        var privateKey = new bitcore.PrivateKey();
+		var address = privateKey.toAddress().toString();
+		var exported = privateKey.toWIF();
+
+		$(".newAddress").html(address);
+        $("#copy-address").attr( "data-clipboard-text", address );
+		$(".newKey").html(exported);
+        $("#key-address").attr( "data-clipboard-text", exported );
+
+    });
+
+	$("#accessAccount").click(function () {
+		var address = $(".newAddress").html();
+        var goTo = window.location.origin+"/home/"+address;
+        window.location.href = goTo;
+    });
+</script>
+{% endblock %}

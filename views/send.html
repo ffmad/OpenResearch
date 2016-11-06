@@ -1,0 +1,293 @@
+{% extends "basic.html" %}
+
+{% block content %}
+<div class="row">
+
+    <div class="panel panel-rmb-info utxo">
+        <div class="panel-heading">Avalaible to send</div>
+        <div class="panel-body">
+            <p>You can currently send <span data-bind="messAvailable"></span> messages</p>
+        </div>
+    </div>
+
+    <div class="panel panel-red">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-key"></i> Your Private Key</div>
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="key" placeholder="Enter your private key to send a message">
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-eye"></i> Transparent message</div>
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label for="sel1" class="col-md-12 col-lg-2 control-label">Type of message:</label>
+                <div class="col-md-12 col-lg-10">
+                    <select class="form-control" id="message-selection">
+                        <option value="classic">Classic</option>
+                        <option value="ew">Eternity Wall message</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="message" class="col-md-12 col-lg-2 control-label">Message (max 72 char):</label>
+                <div class="col-md-12 col-lg-10">
+                    <input type="text" maxlength="72" class="form-control" id="message">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submitMessage" type="submit" class="sendButton btn btn-default">Send transparent message to the Blockchain</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-eye-slash"></i> Encrypted message</div>
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label for="messagetoencrypt" class="col-md-12 col-lg-2 control-label">Message (max 47 char):</label>
+                <div class="col-md-12 col-lg-10">
+                    <input type="text" maxlength="47" class="form-control" id="messagetoencrypt">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="col-md-12 col-lg-2 control-label">Password:</label>
+                <div class="col-md-12 col-lg-10">
+                    <input type="text" class="form-control" id="password">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button id="submitEncryptedMessage" type="submit" class="sendButton btn btn-default">Send encrypted message to the Blockchain</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-certificate"></i> Certificate a document</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <input id="upload-file" type="file" class="upload" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-8">
+                    <button id="submitDocument" type="submit" class="sendButton btn btn-default">Send File Digest to the blockchain</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+{% endblock %}
+
+{% block js %}
+<script src="../../bower_components/bitcore/bitcore.min.js"></script>
+<script type="text/javascript">
+
+    $(function() {
+        var api_key_id = '50eda91debdf37f524f2a1be3653d291';
+        var addr = '{{myAddress}}';
+        var url = 'https://api.smartbit.com.au/v1/blockchain/address/' + addr + '/unspent';
+        $.ajax({
+            url: url,
+            data: {'api-key-id': api_key_id},
+            type: 'GET',
+
+            success: function(data) {
+                console.log(data);
+
+                var availableSent = [];
+                data.unspent.forEach(function(UTXO) {
+                    if (UTXO.value_int > 10000 && UTXO.confirmations >= 1){
+                        availableSent.push(UTXO);
+                    }
+                });
+
+                var utxo = {
+                    messAvailable: availableSent.length
+                }
+
+                $('.utxo').render(utxo);
+
+                if ( availableSent.length == 0) {
+                    $('.utxo').removeClass('panel-rmb');
+                    $('.utxo').addClass('panel-red')
+                }
+            }
+        });
+    });
+
+    function sendThatFile(fileread)
+    {   
+        $('#submitDocument').attr("disabled", "disabled");
+
+        var fileread;
+        var address = "{{myAddress}}";
+        var mess = "524d4264"+fileread; //RMBd
+        //var mess = "444f4350524f4f46"+fileread; //DOCPROOF
+
+        var encoding = "hex";
+        var isLocal = false;
+        var key = $("#key").val();
+
+        var message= { mess, address, encoding, isLocal, key };
+
+        sendMessage(message);
+    }
+
+</script>
+
+<script type="text/javascript">
+
+    $(".message-success").hide();
+
+    $('#submitMessage').click(function () {
+
+        if ($("#key").val() == "") {
+            alert("Don't forget to fill your key before sending, it might be useful");
+            return;
+        }
+
+        $('#submitMessage').attr("disabled", "disabled");
+
+        var mess = $('#message').val();
+        var address = "{{myAddress}}";
+        var messageType = $("#message-selection").val();
+
+        if (messageType == "ew") {
+            var mess = "EW "+mess;
+        }
+        var encoding = "message";
+        var isLocal = false;
+        var key = $("#key").val();
+
+        var message= { mess, address, encoding, isLocal, key };
+
+        sendMessage(message);
+    });
+
+    $('#submitEncryptedMessage').click(function () {
+
+        if ($("#key").val() == "") {
+            alert("Don't forget to fill your key before sending, it might be useful");
+            return;
+        }
+
+        $('#submitEncryptedMessage').attr("disabled", "disabled");
+
+        var mess = $('#messagetoencrypt').val();
+        var password = $('#password').val();
+
+        mess = ''+CryptoJS.AES.encrypt(mess, password);
+        mess = CryptoJS.enc.Base64.parse(mess);
+        mess = CryptoJS.enc.Hex.stringify(mess);
+
+        var address = "{{myAddress}}";
+
+        /* Add Remember prefix for encrypted messages */
+
+        var mess = "524d4265"+mess.substring(16);
+
+        var encoding = "hex";
+        var isLocal = false;
+        var key = $("#key").val();
+
+        var message= { mess, address, encoding, isLocal, key };
+
+        sendMessage(message);
+    });
+
+    $('#submitDocument').click(function () {
+        if ($("#key").val() == "") {
+            alert("Don't forget to fill your key before sending, it might be useful");
+            return;
+        }
+        hashThatFile("send");
+    })
+
+    socket.on('message', function(message) {
+        console.log("transaction sent: "+message);
+        if(!alert("Sent with transaction: "+message )){window.location.reload();}
+    })
+
+    socket.on('erreur', function(message) {
+        if(!alert(message )){window.location.reload();}
+    })
+
+    function sendMessage(message){
+
+        var bitcore = require('bitcore');
+        var Buffer = bitcore.Buffer;
+        var message = message;
+        var myPrivKey = message.key;
+        var api_key_id = '50eda91debdf37f524f2a1be3653d291';
+        var url = 'https://api.smartbit.com.au/v1/blockchain/address/' + message.address + '/unspent';
+        
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {'api-key-id': api_key_id},
+            success: function(data) {
+
+                console.log(data);
+                var utxo;
+                data.unspent.some(function (UTXO, index, _ary) {
+                    if ( UTXO.value_int > 10000 && UTXO.confirmations > 0 ) {
+                        utxo = {
+                            "txId" : UTXO.txid,
+                            "outputIndex" : UTXO.n,
+                            "address" : message.address,
+                            "script" : UTXO.script_pub_key.hex,
+                            "satoshis" : UTXO.value_int
+                        };
+                        return true;
+                    }; 
+                });
+
+                if (!utxo) {
+                    alert("No available outputs to send a message");
+                } else {
+                    var privateKey = bitcore.PrivateKey.fromWIF(myPrivKey);
+                    var finalChange = utxo.satoshis - 10000;
+
+                    if (message.encoding == "message") {
+                        var transaction = new bitcore.Transaction()
+                            .from(utxo)
+                            .to(utxo.address, finalChange)
+                            .addData(message.mess) // Add OP_RETURN data
+                            .sign(privateKey)
+                            .serialize(true);
+
+                    } else if (message.encoding == "hex") {
+                        var transaction = new bitcore.Transaction()
+                            .from(utxo)
+                            .addData(new bitcore.deps.Buffer(message.mess, 'hex')) // Add OP_RETURN data
+                            .to(utxo.address, finalChange)
+                            .sign(privateKey)
+                            .serialize(true);
+                    }
+                    console.log(transaction);
+                    socket.emit('transaction', transaction);
+                }
+            }
+        });
+    }
+</script>
+{% endblock %}

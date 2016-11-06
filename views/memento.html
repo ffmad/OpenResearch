@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>remembr.io</title>
+
+    <link rel="icon" href="../../img/favicon.ico">
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../../dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../dist/css/remembr.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <!--nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="../img/icon.png">
+            </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">One more separated link</a></li>
+                    </ul>
+                    </li>
+                </ul>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    <li><a href="#">Link</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav-->
+
+    <div class="container">
+
+        
+        <div class="page-header">
+            <h2 class="login-welcome text-center"> Memento <a target="_blank" class="by-remembrio" href="http://remembr.io">by remembr.io</a></h2>
+        </div>
+
+        <div class="panel panel-rmb-light">
+            <div class="panel-heading hex"><i class="fa fa-panel-heading fa-exchange"></i> Transaction <span class="transaction_hash"></span></div>
+        </div>
+
+        <div id="document">
+            <div class="document-rendering">
+                <div class="panel panel-rmb-light">
+                    <div class="panel-heading"><i class="fa fa-panel-heading fa-registered"></i> Provider</div>
+                    <div class="panel-body">
+                        <img class="logo" src="">
+                    </div>
+                </div>
+
+                <div class="panel panel-rmb-light">
+                    <div class="panel-heading"><i class="fa fa-panel-heading fa-file"></i> Document Information</div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><b>Blockchain Timestamp:</b> <span data-bind="blktimestamp"></span></li>
+                        <li class="list-group-item"><b>Document Digest:</b> <span id="digest"></span></li>
+                        <li class="list-group-item"><b>Checksum:</b> <span data-bind="checksum">Not Provided</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="panel panel-rmb-light">
+                <div class="panel-heading"><i class="fa fa-panel-heading fa-certificate"></i> Document matching</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <input id="upload-file" type="file" class="upload" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <span id="matching"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div id="message">
+            <div class="document-rendering">
+                <div class="panel panel-rmb-light">
+                    <div class="panel-heading"><i class="fa fa-panel-heading fa-registered"></i> Provider</div>
+                    <div class="panel-body">
+                        <span data-bind="provider"></span>
+                    </div>
+                </div>
+
+                <div class="panel panel-rmb-light">
+                    <div class="panel-heading"><i class="fa fa-panel-heading fa-file-text"></i> Message Information</div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><b>Blockchain Timestamp:</b> <span data-bind="blktimestamp"></span></li>
+                        <li class="list-group-item"><b>Message:</b> <span id="text"></span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-rmb-info">
+            <div class="panel-heading"><i class="fa fa-panel-heading fa-search"></i> Search Memento</div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-offset-1 col-sm-10">
+                        <input type="text" class="form-control" id="hash" placeholder="transaction hash">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="text-center">
+                        <button id="submit" type="submit" class="btn btn-default">Access Memento</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Important JavaScript for remembr.io -->
+    <script src="../../js/transparency.min.js"></script>
+    <script src="../../js/moment-with-locales.js"></script>
+    <script src="../../js/ZeroClipboard.min.js"></script>
+    <script src="../../js/jquery.qrcode.min.js"></script>
+
+    <!-- Encryption tools for remembr.io -->
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/aes.js"></script>
+    <script src="https://crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../../dist/js/remembr.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://app.remembr.io');
+
+        $(".overlay .close").click(function () {
+            $(".overlay").hide();
+        })
+    </script>
+    <script type="text/javascript">
+
+        $("#upload-file").change(function(){
+            hashThatFile("verify");
+        });
+
+
+        $("#submit").click(function () {
+            var hash = $("#hash").val();
+            var goTo = window.location.origin+"/memento/"+hash;            
+            window.location.href = goTo;
+        });
+
+        $(function() {
+            var api_key_id = '50eda91debdf37f524f2a1be3653d291';
+            var hash = '{{ transaction }}';
+            var url = 'https://api.smartbit.com.au/v1/blockchain/transaction/' + hash + '/op-returns';
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {'api-key-id': api_key_id},
+                success: function(data) {
+                    console.log(data);
+                    $('.hex').render(data);
+
+                    
+
+                    var message = data.op_returns[0];
+
+                    var memento = {};
+                    memento.opType = "";
+                    memento.blktimestamp = "";
+                    memento.transaction_hash = message.txid;
+
+                    if ( !message.text && message.op_return.hex.substring(0, 8) != "524d4265" ){
+                        $("#document").show();
+                        $("#message").hide();
+                        memento.opType = "digest";
+                        if (message.op_return.hex.substring(0, 8) == "524d4264") {
+                            memento.digest = message.op_return.hex.substring(8);
+                            memento.provider = "remembr";
+                            memento.logo = "../img/company/remembr.png";
+                        } else if (message.op_return.hex.substring(0, 16) == "444f4350524f4f46") {
+                            memento.digest = message.op_return.hex.substring(16);
+                            memento.provider = "poe";
+                            memento.logo = "../img/company/poe.png";
+                        } else if ( message.op_return.hex.substring(0, 4) == "4253" ) {
+                            memento.checksum = message.op_return.hex.substring(8).substr(message.op_return.hex.substring(8).length - 8);
+                            memento.digest = message.op_return.hex.substring(8).slice(0, -8);
+                            memento.provider = "BlockSign";
+                            memento.logo = "../img/company/blocksign.png";
+                        } else if ( message.op_return.hex.substring(0, 16) == "42495450524f4f46" ) {
+                            memento.digest = message.op_return.hex.substring(16)
+                            memento.provider = "BitProof";
+                            memento.logo = "../img/company/bitproof.png";
+                        } else {
+                            memento.digest = message.hex;
+                        }
+                    } else if ( !message.text && message.op_return.hex.substring(0, 8) == "524d4265" ) {
+                        //
+                    } else {
+                        if (message.op_return.text.substring(0, 2)== "EW") {
+                            memento.text = message.text.substring(2);
+                            memento.provider = "Eternity Wall"
+                        } else {
+                            memento.text = message.text;
+                            memento.provider = "Unknown";
+                        }
+                    }
+
+                    var directives = {
+                        text: {
+                            class: function(params) {
+                              return this.transaction_hash;
+                            }
+                        },
+                        hex: {
+                            class: function(params) {
+                              return this.transaction_hash;
+                            }
+                        },
+                        logo: {
+                            src: function(params) {
+                              return this.logo;
+                            }
+                        },
+                        blktimestamp: {
+                            class: function(params) {
+                              return "blktimestamp "+this.transaction_hash;
+                            }
+                        },
+                        transaction_hash: {
+                            href: function(params) {
+                              return "https://www.blocktrail.com/BTC/tx/"+ this.transaction_hash;
+                            }
+                        }
+                    };
+
+                    $('.document-rendering').render(memento, directives);
+
+                    var url = 'https://api.smartbit.com.au/v1/blockchain/transaction/' + message.txid;
+                    var startTime = new Date().getTime();
+                    $.ajax({
+                        url: url,
+                        data: {'api-key-id': api_key_id},
+                        type: 'GET',
+                        success: function(tx) {
+                            $(".blktimestamp."+tx.transaction.txid).html(moment(tx.transaction.time*1000).format("MMMM Do YYYY, h:mm:ss a"));
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

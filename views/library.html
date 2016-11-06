@@ -1,0 +1,378 @@
+{% extends "basic.html" %}
+
+{% block content %}
+<div class="row">
+
+    <div class="panel panel-rmb-info">
+        <div class="panel-heading">Information</div>
+        <div class="panel-body">
+            <p>Sometimes, you will not see your latest message until it is confirmed.</p>
+        </div>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-user"></i> Your Messages</div>
+        <ul id="library" class="list-group">
+            <li class="list-group-item">
+                <a class="tx-toggle dropdown-toggle btn" data-toggle="dropdown">
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a target="_blank" data-bind="transaction_hash"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="memento"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockr"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockchain"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blocktrail"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="insight"></a>
+                    </li>
+                </ul>
+                <span data-bind="timestamp"></span>
+                <span data-bind="text">
+                    <span class="unconfirmed"> unconfirmed</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-newspaper-o"></i> Eternity Wall</div>
+        <ul id="eternitywall" class="list-group">
+            <li class="list-group-item">
+                <a class="tx-toggle dropdown-toggle btn" data-toggle="dropdown">
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a target="_blank" data-bind="eternity"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="memento"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockr"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockchain"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blocktrail"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="insight"></a>
+                    </li>
+                </ul>
+                <span data-bind="timestamp"></span>
+                <span data-bind="text">
+                    <span class="unconfirmed"> unconfirmed</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-user-secret"></i> Encrypted Messages</div>
+        <ul id="encryptedMessages" class="list-group">
+            <li class="list-group-item">
+                <a class="tx-toggle dropdown-toggle btn" data-toggle="dropdown">
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a target="_blank" data-bind="transaction_hash"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="memento"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockr"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockchain"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blocktrail"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="insight"></a>
+                    </li>
+                </ul>
+                <a class="btn btn-default decryptButton" data-toggle="modal" data-target="#myModal" role="button">
+                    <span data-bind="decrypt"><span>
+                </a>
+                <span data-bind="timestamp"></span>
+                <span data-bind="hex" class="hex">
+                    <span class="unconfirmed"> unconfirmed</span> 
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="panel panel-rmb-light">
+        <div class="panel-heading"><i class="fa fa-panel-heading fa-certificate"></i> Documents digest</div>
+        <ul id="documentDigests" class="list-group">
+            <li class="list-group-item">
+                <a class="tx-toggle dropdown-toggle btn" data-toggle="dropdown">
+                    <i class="fa fa-caret-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-user">
+                    <li>
+                        <a target="_blank" data-bind="transaction_hash"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="memento"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockr"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blockchain"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="blocktrail"></a>
+                    </li>
+                    <li>
+                        <a target="_blank" data-bind="insight"></a>
+                    </li>
+                </ul>
+                <span data-bind="timestamp"></span>
+                <a class="proofofexistence" target="_blank">Proof of Existence</a>
+                <span data-bind="hex">
+                    <span class="unconfirmed"> unconfirmed</span>
+                </span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Enter password</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" id="decryptpassword">
+        <input type="hidden" class="form-control" id="encryptedHex">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="decrypt-trigger" type="button" class="btn btn-primary">Decrypt</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    $(function() {
+        var api_key_id = '50eda91debdf37f524f2a1be3653d291';
+        var addr = '{{myAddress}}';
+        var url = 'https://api.smartbit.com.au/v1/blockchain/address/' + addr + '/op-returns';
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: {'api-key-id': api_key_id},
+            
+            success: function(data) {
+
+                console.log(data);
+
+                data.op_returns.forEach(function(message, index) {
+                    message.blockchain = "Blockchain.info";
+                    message.blockr = "Blockr.io";
+                    message.blocktrail = "Blocktrail";
+                    message.insight = "Insight";
+                    message.decrypt = "Decrypt";
+                    message.memento = "Memento";
+                    message.timestamp = "";
+                });
+
+                var directives = {
+                    text: {
+                        class: function(params) {
+                          return this.txid;
+                        }
+                    },
+
+                    hex: {
+                        class: function(params) {
+                          return this.txid;
+                        }
+                    },
+
+                    decrypt: {
+                        class: function(params) {
+                          return this.op_return.hex;
+                        }
+                    },
+
+                    timestamp: {
+                        class: function(params) {
+                          return "timestamp "+this.txid;
+                        }
+                    },
+
+                    transaction_hash: {
+                        href: function(params) {
+                          return "https://www.blocktrail.com/BTC/tx/"+ this.txid;
+                        }
+                    },
+                    blockchain: {
+                        href: function(params) {
+                          return "https://blockchain.info/tx/"+ this.txid;
+                        }
+                    },
+                    blockr: {
+                        href: function(params) {
+                          return "https://btc.blockr.io/tx/info/"+ this.txid;
+                        }
+                    },
+                    blocktrail: {
+                        href: function(params) {
+                          return "https://www.blocktrail.com/BTC/tx/"+ this.txid;
+                        }
+                    },
+                    insight: {
+                        href: function(params) {
+                          return "https://insight.bitpay.com/tx/"+ this.txid;
+                        }
+                    },
+                    memento: {
+                        href: function(params) {
+                          return "https://app.remembr.io/memento/"+ this.txid;
+                        }
+                    }
+                };
+
+                var generalData = [];
+                var ewData = [];
+                var documentData = [];
+                var encryptedData = [];
+
+                data.op_returns.forEach(function(message, index) {
+                    if (message.op_return.text.substring(0, 2)== "EW") {
+                        message.text = message.op_return.text.substring(2);
+                        message.eternity = "Your Message on Eternity Wall";
+                        ewData.push(message);
+                    } else if (message.op_return.hex.substring(0, 8) == "524d4264") {
+                        message.hex = "Remembr SHA2 digest: "+message.op_return.hex.substring(8);
+                        documentData.push(message);
+                    } else if ( message.op_return.hex.substring(0, 8) == "524d4265") {
+                        message.hex = message.op_return.hex.substring(8);
+                        encryptedData.push(message);
+                    } else if ( message.op_return.hex.substring(0, 16) == "444f4350524f4f46") {
+                        message.hex = "Proofofexistence: "+message.op_return.hex.substring(16);
+                        documentData.push(message);
+                    } else {
+                        message.text = message.op_return.text;
+                        generalData.push(message);
+                    }
+                });
+
+                $('#library').render(generalData, directives);
+                $('#encryptedMessages').render(encryptedData, directives);
+                $('#documentDigests').render(documentData, directives);
+
+                directives.eternity = {
+                        href: function(params) {
+                          return "http://eternitywall.it/m/"+ this.txid;
+                        }
+                    };
+
+                $('#eternitywall').render(ewData, directives);
+
+                documentReady();
+
+                $.get('https://api.blocktrail.com/v1/BTC/address/'+addr+'/unconfirmed-transactions?api_key=edab8f00313c53db42adda47a002ad9a373fb607', function(address_unconfirmed_txs) {
+                    address_unconfirmed_txs.data.forEach(function(address, index) {
+                        $("."+address.hash+" .unconfirmed").show();
+                    });
+                });
+
+                // Get all timestamps
+                data.op_returns.forEach(function(message, index) {
+                    var url = 'https://api.smartbit.com.au/v1/blockchain/tx/' + message.txid;
+                    var startTime = new Date().getTime();
+                    $.ajax({
+                        url: url,
+                        data: {'api-key-id': api_key_id},
+                        type: 'GET',
+                        success: function(tx) {
+                            if ( tx.transaction.time ) {
+                                $(".timestamp."+tx.transaction.txid).html(moment(tx.transaction.time*1000).format("D/MM/YY, HH:mm:ss"));
+                            } else if ( tx.transaction.first_seen ) {
+                                $(".timestamp."+tx.transaction.txid).html("1ère vue : "+moment(tx.transaction.first_seen*1000).format("D/MM/YY, HH:mm:ss"));
+                            }
+                        }
+                    });
+                });
+
+                // add DOCPROOF
+                documentData.forEach(function(message, index) {
+                    if (message.hex.substring(0, 16) == "444f4350524f4f46") {
+                        $(".timestamp."+message.txid).parent().find(".proofofexistence").show();
+                        $(".timestamp."+message.txid).parent().find(".proofofexistence").attr("href", "http://www.proofofexistence.com/detail/"+message.hex.substring(16));
+                    }
+                });
+
+                
+            }
+        });
+    });
+
+</script>
+<script type="text/javascript">
+
+    function documentReady(){
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').focus()
+        })
+
+        $('.decryptButton').click(function () {
+            var encryptedHex = $(this).find("span").attr("class");
+            $("#encryptedHex").val(encryptedHex);
+        });
+
+        $('#decrypt-trigger').click(function () {
+            var encryptedHex = $("#encryptedHex").val().substring(8);
+            var password = $("#decryptpassword").val();
+
+            //test if there is "Salted_" before
+            if (encryptedHex.substring(0, 16) == "53616c7465645f5f") {
+                encryptedHexObj = CryptoJS.enc.Hex.parse(encryptedHex);
+            } else {
+                encryptedHexObj = CryptoJS.enc.Hex.parse("53616c7465645f5f"+encryptedHex);
+            }
+            encryptedBase64 = CryptoJS.enc.Base64.stringify(encryptedHexObj);
+
+            var decrypted = ''+CryptoJS.AES.decrypt(encryptedBase64, password);
+            decrypted = CryptoJS.enc.Hex.parse(decrypted);
+            decrypted = CryptoJS.enc.Utf8.stringify(decrypted);
+
+            $(".524d4265"+encryptedHex).parent().removeAttr( "data-target" );
+            $(".524d4265"+encryptedHex).parent().removeClass( "btn-default" );
+            $(".524d4265"+encryptedHex).parent().html(decrypted);
+
+            // cleaning
+            $("#encryptedHex").val("");
+            $("#decryptpassword").val("");
+            $('#myModal').modal('toggle');
+        });
+    }
+</script>
+{% endblock %}

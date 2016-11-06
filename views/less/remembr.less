@@ -1,0 +1,925 @@
+@import "variables.less";
+@import "mixins.less";
+
+
+// Fonts
+@import url(https://fonts.googleapis.com/css?family=Ubuntu:400,300,400italic,500);
+
+@font-face {
+    font-family: 'allerbold';
+    src: url('../fonts/Aller/aller_bd-webfont.eot');
+    src: url('../fonts/Aller/aller_bd-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Aller/aller_bd-webfont.woff2') format('woff2'),
+         url('../fonts/Aller/aller_bd-webfont.woff') format('woff'),
+         url('../fonts/Aller/aller_bd-webfont.ttf') format('truetype'),
+         url('../fonts/Aller/aller_bd-webfont.svg#allerbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'allerbold_italic';
+    src: url('../fonts/Aller/aller_bdit-webfont.eot');
+    src: url('../fonts/Aller/aller_bdit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Aller/aller_bdit-webfont.woff2') format('woff2'),
+         url('../fonts/Aller/aller_bdit-webfont.woff') format('woff'),
+         url('../fonts/Aller/aller_bdit-webfont.ttf') format('truetype'),
+         url('../fonts/Aller/aller_bdit-webfont.svg#allerbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'alleritalic';
+    src: url('../fonts/Aller/aller_it-webfont.eot');
+    src: url('../fonts/Aller/aller_it-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Aller/aller_it-webfont.woff2') format('woff2'),
+         url('../fonts/Aller/aller_it-webfont.woff') format('woff'),
+         url('../fonts/Aller/aller_it-webfont.ttf') format('truetype'),
+         url('../fonts/Aller/aller_it-webfont.svg#alleritalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'allerregular';
+    src: url('../fonts/Aller/aller_rg-webfont.eot');
+    src: url('../fonts/Aller/aller_rg-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Aller/aller_rg-webfont.woff2') format('woff2'),
+         url('../fonts/Aller/aller_rg-webfont.woff') format('woff'),
+         url('../fonts/Aller/aller_rg-webfont.ttf') format('truetype'),
+         url('../fonts/Aller/aller_rg-webfont.svg#allerregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+// Global Styles
+
+body {
+    background-color: #FFF;
+    font-family: "Ubuntu";
+    font-weight: 400;
+    font-style: normal;
+    color: @ether-dark;
+}
+
+.close {
+    color: #FFF;
+    text-shadow: none;
+    filter: alpha(opacity=80);
+    opacity: .8;
+}
+
+.font20px {
+    font-size: 20px;
+}
+
+a {
+    cursor: pointer;
+    color: #482f91;
+    text-decoration: none;
+    &:hover {
+        color: #9182BB;
+        text-decoration: none; 
+    }
+}
+
+.unconfirmed {
+    margin-left: 10px;
+    display: none;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 3px 10px;
+    background-color: #EC0000;
+    color: white;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.copy-button {
+    text-align: center;
+    color: #482f91;
+    float: left;
+}
+
+.panel-heading em {
+    font-size: 13px;
+    text-transform: none;
+}
+
+.fa-panel-heading {
+    margin-right: 10px;
+    font-size: 18px !important;
+    vertical-align: -10%;
+}
+
+@media(min-width:768px) {
+    .form-group {
+        height: 25px;
+    }
+
+    .form-group label {
+        line-height: 17px;
+    }
+}
+
+.panel-body h4 {
+    font-size: 18px;
+    color: #482f91;
+    font-family: "allerregular";
+}
+
+// Wrappers
+
+#wrapper {
+    width: 100%;
+}
+
+#page-wrapper {
+    padding: 0 15px;
+    min-height: 568px;
+    background-color: white;
+    padding-top: 20px;
+    margin-top: 51px;
+    background-color: #EFEFEF;
+}
+
+@media(min-width:768px) {
+    #page-wrapper {
+        position: inherit;
+        margin: 0 0 0 250px;
+        padding: 0 30px;
+        border-left: 1px solid darken(@gray-lightest, 6.5%);
+        padding-top: 20px;
+        margin-top: 51px;
+    }
+}
+
+.overlay {
+    display: none;
+    position: absolute;
+    top: 0;
+    z-index: 50000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(107, 107, 107, 0.7);
+}
+
+.overlay .panel {
+    width: 60%;
+    height: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px;
+}
+
+.overlay .panel .Qraddress {
+    font-size: 20px;
+    text-align: center;
+    margin-top: 25px;
+    display: block;
+}
+
+@media (max-width:768px) {
+
+}
+
+@media (max-width:768px) {
+    .overlay .panel {
+        height: 230px;
+    }
+
+    .overlay .panel .Qraddress {
+        display: none;
+    }
+}
+
+.dark {
+    color: @ether-dark;
+}
+
+.light {
+    color: @ether-light;
+}
+
+.brand-color {
+    color: @rmb-main;
+}
+
+.green {
+    color: @rmb-green;
+}
+
+.red {
+    color: #D24E4E;
+}
+
+
+
+// Navigation
+
+.top-menu {
+    background-color: #FFF;
+}
+
+.navbar-default .navbar-brand, .navbar-default .navbar-brand:hover {
+    font-family: 'Aladin', cursive;
+    font-size: 40px;
+    line-height: 25px;
+    padding-left: 12px;
+    color: #FFF;
+}
+
+.navbar-default .navbar-brand .fa-history {
+    font-size: 24px;
+    color: #2D2D2D;
+}
+
+.navbar-brand {
+    padding: 0;
+}
+
+.navbar-brand>img {
+    display: block;
+    height: 50px;
+}
+
+// --Topbar
+
+.navbar-top-links {
+    margin-right: 0;
+}
+
+.navbar-top-links li {
+    display: inline-block;
+}
+
+.navbar-top-links li a {
+    padding: 15px;
+    min-height: 50px;
+}
+
+.navbar-top-links .dropdown-menu li {
+    display: block;
+}
+
+.navbar-top-links .dropdown-menu li:last-child {
+    margin-right: 0;
+}
+
+.navbar-top-links .dropdown-menu li a {
+    padding: 3px 20px;
+    min-height: 0;
+}
+
+.navbar-top-links .dropdown-menu li a div {
+    white-space: normal;
+}
+
+.navbar-top-links .dropdown-messages,
+.navbar-top-links .dropdown-tasks,
+.navbar-top-links .dropdown-alerts {
+    width: 310px;
+    min-width: 0;
+}
+
+.navbar-top-links .dropdown-messages {
+    margin-left: 5px;
+}
+
+.navbar-top-links .dropdown-tasks {
+    margin-left: -59px;
+}
+
+.navbar-top-links .dropdown-alerts {
+    margin-left: -123px;
+}
+
+.navbar-top-links .dropdown-user {
+    right: 0;
+    left: auto;
+}
+
+.nav>li>a {
+    color: @rmb-brand;
+}
+
+.nav>li>a:focus, .nav>li>a:hover, .nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    color: @rmb-brand-light;
+    text-decoration: none;
+    background-color: #FFF;
+}
+
+
+
+// --Sidebar
+
+.sidebar {
+    .sidebar-nav.navbar-collapse {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.sidebar .sidebar-search {
+    padding: 15px;
+}
+
+.sidebar ul li {
+    border-bottom: 1px solid darken(@gray-lightest, 6.5%);
+    a {
+        font-size: 16px;
+        font-family: "allerbold";
+        background-color: white;
+        color: #333;
+        &.active {
+            color: @rmb-brand-light;
+            background-color: white;
+        }
+    }
+}
+
+.sidebar .fa {
+    color: #482f91;
+    margin-right: 15px;
+    font-size: 17px !important;
+}
+
+.sidebar a.active .fa {
+    color: @rmb-brand-light;
+}
+
+.sidebar .arrow {
+    float: right;
+}
+
+.sidebar .fa.arrow:before {
+    content: "\f104";
+}
+
+.sidebar .active > a > .fa.arrow:before {
+    content: "\f107";
+}
+
+.sidebar .nav-second-level li,
+.sidebar .nav-third-level li {
+    border-bottom: none !important;
+}
+
+.sidebar .nav-second-level li a {
+    padding-left: 37px;
+}
+
+.sidebar .nav-third-level li a {
+    padding-left: 52px;
+}
+
+@media(min-width:768px) {
+    .sidebar {
+        z-index: 1;
+        position: absolute;
+        width: 250px;
+        margin-top: 51px;
+    }
+
+    .navbar-top-links .dropdown-messages,
+    .navbar-top-links .dropdown-tasks,
+    .navbar-top-links .dropdown-alerts {
+        margin-left: auto;
+    }
+}
+
+// Buttons
+
+.btn-outline {
+    color: inherit;
+    background-color: transparent;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: @brand-primary;
+}
+
+.btn-success.btn-outline {
+    color: @brand-success;
+}
+
+.btn-info.btn-outline {
+    color: @brand-info;
+}
+
+.btn-warning.btn-outline {
+    color: @brand-warning;
+}
+
+.btn-danger.btn-outline {
+    color: @brand-danger;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: white;
+}
+
+// Chat Widget
+
+.chat {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.chat li {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted @gray-light;
+}
+
+.chat li.left .chat-body {
+    margin-left: 60px;
+}
+
+.chat li.right .chat-body {
+    margin-right: 60px;
+}
+
+.chat li .chat-body p {
+    margin: 0;
+}
+
+.panel .slidedown .glyphicon,
+.chat .glyphicon {
+    margin-right: 5px;
+}
+
+.chat-panel .panel-body {
+    height: 350px;
+    overflow-y: scroll;
+}
+
+// Login Page
+
+.login-panel {
+    margin-top: 25%;
+}
+
+// Flot Charts Containers
+
+.flot-chart {
+    display: block;
+    height: 400px;
+}
+
+.flot-chart-content {
+    width: 100%;
+    height: 100%;
+}
+
+// DataTables Overrides
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc,
+table.dataTable thead .sorting_asc_disabled,
+table.dataTable thead .sorting_desc_disabled {
+    background: transparent;
+}
+
+table.dataTable thead .sorting_asc:after {
+    content: "\f0de";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting_desc:after {
+    content: "\f0dd";
+    float: right;
+    font-family: fontawesome;
+}
+
+table.dataTable thead .sorting:after {
+    content: "\f0dc";
+    float: right;
+    font-family: fontawesome;
+    color: rgba(50,50,50,.5);
+}
+
+// Circle Buttons 
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.428571429;
+}
+
+.btn-circle.btn-lg {
+    width: 50px;
+    height: 50px;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-size: 18px;
+    line-height: 1.33;
+}
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    border-radius: 35px;
+    font-size: 24px;
+    line-height: 1.33;
+}
+
+// Grid Demo Elements
+
+.show-grid [class^="col-"] {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #ddd;
+    background-color: #eee !important;
+}
+
+.show-grid {
+    margin: 15px 0;
+}
+
+// Custom Colored Panels
+
+.huge {
+    font-size: 26px;
+}
+
+.panel-heading {
+    text-transform: uppercase;
+    font-family: "allerbold";
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.panel-rmb {
+    border-color: @rmb-brand;
+    .panel-heading {
+        border-color: @rmb-brand;
+        color: white;
+        background-color: @rmb-brand;
+    }
+    a {
+        color: @rmb-brand;
+        &:hover {
+            color: darken(@rmb-brand, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @rmb-brand;
+    }
+}
+
+.panel-rmb-light {
+    border-color: @rmb-panel-light;
+    .panel-heading {
+        border-color: @rmb-panel-light;
+        color: white;
+        background-color: @rmb-panel-light;
+    }
+    a {
+        color: @rmb-panel-light;
+        &:hover {
+            color: darken(@rmb-panel-light, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @rmb-panel-light;
+    }
+}
+
+.panel-rmb-gray {
+    border-color: @rmb-light-gray;
+    .panel-heading {
+        border-color: @rmb-light-gray;
+        color: white;
+        background-color: @rmb-dark-gray;
+    }
+    a {
+        color: @rmb-dark-gray;
+        &:hover {
+            color: darken(@rmb-dark-gray, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @rmb-dark-gray;
+    }
+}
+
+.panel-rmb-info {
+    border-color: @rmb-blue;
+    .panel-heading {
+        border-color: @rmb-blue;
+        color: white;
+        background-color: @rmb-blue;
+    }
+    a {
+        color: @rmb-blue;
+        &:hover {
+            color: darken(@rmb-blue, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @rmb-blue;
+    }
+}
+
+.panel-ether-purple {
+    border-color: @ether-purple;
+    .panel-heading {
+        border-color: @ether-purple;
+        color: white;
+        background-color: @ether-purple;
+    }
+    a {
+        color: @ether-purple;
+        &:hover {
+            color: darken(@ether-purple, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @ether-purple;
+    }
+}
+
+.panel-ether-red {
+    border-color: @ether-red;
+    .panel-heading {
+        border-color: @ether-red;
+        color: white;
+        background-color: @ether-red;
+    }
+    a {
+        color: @ether-red;
+        &:hover {
+            color: darken(@ether-red, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @ether-red;
+    }
+}
+
+.panel-ether-blue {
+    border-color: @ether-blue;
+    .panel-heading {
+        border-color: @ether-blue;
+        color: white;
+        background-color: @ether-blue;
+    }
+    a {
+        color: @ether-blue;
+        &:hover {
+            color: darken(@ether-blue, 15%);
+        }
+    }
+    .dropdown-toggle.tx-toggle, .timestamp {
+        background-color: @ether-blue;
+    }
+}
+
+
+.panel-green {
+    border-color: @brand-success;
+    .panel-heading {
+        border-color: @brand-success;
+        color: white;
+        background-color: @brand-success;
+    }
+    a {
+        color: @brand-success;
+        &:hover {
+            color: darken(@brand-success, 15%);
+        }
+    }
+}
+
+.panel-red {
+    border-color: @brand-danger;
+    .panel-heading {
+        border-color: @brand-danger;
+        color: white;
+        background-color: @brand-danger;
+    }
+    a {
+        color: @brand-danger;
+        &:hover {
+            color: darken(@brand-danger, 15%);
+        }
+    }
+}
+
+.panel-yellow {
+    border-color: @brand-warning;
+    .panel-heading {
+        border-color: @brand-warning;
+        color: white;
+        background-color: @brand-warning;
+    }
+    a {
+        color: @brand-warning;
+        &:hover {
+            color: darken(@brand-warning, 15%);
+        }
+    }
+}
+
+.btn-rmb {
+    color: white;
+    background-color: @rmb-brand;
+    border-color: @rmb-brand-light;
+    &:hover, &:focus {
+        background-color: @rmb-brand-light;
+        border-color: @rmb-brand-light;
+        color: white; 
+    }
+}
+
+// Library page
+
+.dropdown-toggle.tx-toggle {
+    padding: 1px 7px;
+    margin-right: 10px;
+    color: white;
+    background-color: @rmb-dark-gray;
+    &:hover {
+        color: white;
+    }
+}
+
+.timestamp {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 10px;
+    background-color: @rmb-dark-gray;
+    color: white;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.proofofexistence {
+    font-size: 12px;
+    font-weight: 800;
+    padding: 3px 10px;
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    margin-right: 5px;
+    display: none;
+}
+
+.proofofexistence a {
+    color: white;
+}
+
+.decryptButton {
+    margin-right: 10px;
+}
+
+
+// Raw Design & Landing Page
+
+body.raw {
+    background-color: #EFEFEF;
+}
+
+.raw-wrapper {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 50%;
+    left: 25%;
+    top: 25%;
+    height: 50%;
+    position: absolute;
+    text-align: center;
+    padding-top: 3%;
+    border: 1px solid #9182BB;
+    background: #ffffff url("../../img/background.png") no-repeat right bottom;
+}
+
+.login-logo {
+    margin-left: 10px;
+    margin-top: -10px;
+}
+
+.login-welcome {
+    font-size: 36px;
+    font-family: "allerbold";
+}
+
+.raw-wrapper h3, .raw-wrapper h4 {
+    font-family: "allerbold";
+}
+
+.new-account .login-logo {
+    height: 50px;
+}
+
+.log-phrase {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    left: 0;
+}
+
+.address-login-form {
+    margin-top: 3%;
+}
+
+#submitLogs {
+    margin-top: 20px;
+}
+
+.newAccountRegistered {
+    text-align: left;
+    margin-top: 5%;
+    display: none;
+    font-size: 15px;
+}
+
+.new-account .red {
+    margin-top: 10px;
+    font-weight: bold;
+    margin-left: 15px;
+}
+
+.newAccountRegistered .center {
+    margin-top: 5px;
+    text-align: center;
+}
+
+#accessAccount {
+    margin-top: 20px;
+}
+
+#incoming-btc {
+    display: none;
+}
+
+#addrQrcode {
+    margin-left: auto;
+    margin-right: auto;
+    width: 150px;
+}
+
+
+// Sending page
+
+
+
+// Beta logo
+
+.beta-logo:after {
+    content: "beta";
+    position: absolute;
+    top: 13px;
+    font-family: "allerbold_italic";
+    left: 220px;
+    font-size: 18px;
+    padding: 0px 8px;
+    background-color: #482f91;
+    color: white;
+    border-radius: 3px;
+    margin-right: 5px;
+}
+
+.transaction_hash {
+    text-transform: none;
+}
+
+.by-remembrio {
+    font-size: 18px;
+    font-style: italic;
+}
+
+#document {
+    display: none;
+    height: 500px;
+}
+
+#message {
+    height: 260px;
+}
+
+#document .logo {
+    max-height: 50px;
+}

@@ -1,0 +1,40 @@
+{% extends "raw.html" %}
+
+{% block content %}
+<div class="row new-account">
+
+	<h3> Are you lost ?</h3>
+
+
+    <div class="log-phrase dark">
+		Go back to <a href="/">Login page</a> or start a <a href="/newaccount">New account</a>
+	</div>
+
+<!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+{% endblock %}
+
+{% block js %}
+<script src="bower_components/bitcore/bitcore.min.js"></script>
+<script type="text/javascript">
+	var bitcore = require('bitcore');
+
+	$("#register").click(function () {
+		$(".newAccountRegistered").show();
+
+        var privateKey = new bitcore.PrivateKey();
+		var address = privateKey.toAddress().toString();
+		var exported = privateKey.toWIF();
+
+		$(".newAddress").html(address);
+		$(".newKey").html(exported);
+    });
+
+	$("#accessAccount").click(function () {
+		var address = $(".newAddress").html();
+        var goTo = window.location.origin+"/m/"+address;
+        window.location.href = goTo;
+    });
+</script>
+{% endblock %}
